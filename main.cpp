@@ -1,156 +1,32 @@
+#include"header.h"
 #include<iostream>
 #include<ctime>
-#include<cstdlib>
 #include<algorithm>
-#define SIZE 10000
-#define INF INT32_MAX
+
 using namespace std;
+
 int arr[SIZE + 1] = { 0, };
 int arr2[SIZE + 1] = { 0, };
 int copyArr[SIZE + 1] = { 0, };
-void randomData() {
-    // bool flag[SIZE+1]={0,};
-    // for(int i=0;i<SIZE;i++){
-    //     int randNum = rand()%SIZE+1;
-    //     if(flag[randNum]){
-    //         i--;
-    //         continue;
-    //     }else{
-    //         flag[randNum]=1;
-    //         copyArr[i]=randNum;
-    //     }
-    // }
-    for (int i = 0; i < SIZE; i++) {
-        copyArr[i] = rand();
-    }
-}
 
-void copyData() {
-    for (int i = 0; i < SIZE; i++) {
-        arr[i] = copyArr[i];
-    }
-}
+void randomData();
 
-void bubbleSort() {
-    bool flag = false;
-    for (int i = 0; i < SIZE; i++) {
-        flag = false;
-        for (int j = 0; j < SIZE - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                flag = true;
-            }
-        }
-        if (!flag) {
-            return;
-        }
-    }
-}
+void copyData();
 
-void selectionSort() {
-    for (int i = 0; i < SIZE; i++) {
-        int min = INF;
-        int minIdx = 0;
-        for (int j = i; j < SIZE; j++) {
-            if (arr[j] < min) {
-                min = arr[j];
-                minIdx = j;
-            }
-        }
-        int temp = arr[i];
-        arr[i] = min;
-        arr[minIdx] = temp;
-    }
-}
+void bubbleSort();
 
-void inserationSort() {
-    for (int i = 1; i < SIZE; i++) {
-        int temp = arr[i];
-        int j;
-        for (j = i - 1; j >= 0; j--) {
-            if (arr[j] > temp) {
-                arr[j + 1] = arr[j];
-            }
-            else {
-                break;
-            }
-        }
-        arr[j + 1] = temp;
-    }
-}
+void selectionSort();
 
-void merge(int left, int right)
-{
-    
-    int mid = (left + right) / 2;
+void inserationSort();
 
-    int i = left;
-    int j = mid + 1;
-    int k = left;
-    while (i <= mid && j <= right)
-    {
-        if (arr[i] <= arr[j])
-            arr2[k++] = arr[i++];
-        else
-            arr2[k++] = arr[j++];
-    }
+void merge(int left, int right);
 
-    int tmp = i > mid ? j : i;
+void mergeSort(int left, int right);
 
-    while (k <= right) arr2[k++] = arr[tmp++];
+void heapSort();
 
-    for (int i = left; i <= right; i++) arr[i] = arr2[i];
-}
 
-void heapSort() {
-
-}
-
-void mergeSort(int left, int right)
-{
-    int mid;
-    if (left < right)
-    {
-        mid = (left + right) / 2;
-        mergeSort(left, mid);
-        mergeSort(mid + 1, right);
-        merge(left, right);
-    }
-}
-
-void quickSort(int start, int end) {
-    if (start >= end) {
-        return;
-    }
-    int pivot = start;
-    int i = pivot + 1;
-    int j = end;
-
-    while (i <= j) {
-        while (i <= end && arr[i] <= arr[pivot]) {
-            i++;
-        }
-        while (j > start && arr[j] >= arr[pivot]) {
-            j--;
-        }
-
-        if (i > j) {
-            int tmp = arr[pivot];
-            arr[pivot] = arr[j];
-            arr[j] = tmp;
-        }
-        else {
-            int tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-        }
-    }
-
-    quickSort(start, j - 1);
-    quickSort(j + 1, end);
-}
+void quickSort(int start, int end);
 
 void print() {
     for (int i = 0; i < SIZE; i++) {
@@ -163,7 +39,7 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0), cout.tie(0);
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     clock_t start, finish;
     double duration;
 
